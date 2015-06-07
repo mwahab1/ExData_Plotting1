@@ -37,7 +37,7 @@ colnames(df) <- headers
 
 #combine date and time columns into one column called dateTime.
 
-df$dateTime <- dmy_hms(paste(df$Date, df$Time, sep= " "))
+df$datetime <- dmy_hms(paste(df$Date, df$Time, sep= " "))
 
 # Initiate PNG device as before
 
@@ -52,28 +52,30 @@ par(mfrow= c(2,2))
 
 # Add the four subplots- one at a time
 # Plot 4.1 
-with(df, plot(dateTime, Global_active_power, type ="l", 
-              ylab="Global Active Power (kilowatts)",
+with(df, plot(datetime, Global_active_power, type ="l", 
+              ylab="Global Active Power",
               xlab=""))
 
 # Plot 4.2
-with(df, plot(dateTime, Voltage, type ="l"))
+with(df, plot(datetime, Voltage, type ="l"))
 
 #plot 4.3
 
 ### slight differce from Plot3....dont do the xlab ="". Let it generate dateTime
 ### Also no border/box around legend box.
 ### cex = 0.75 (to mak sure the legend is not too large compared to the plot)
-with(df, plot(dateTime, Sub_metering_1, ylab = "Energy Sub Metering",
+with(df, plot(datetime, Sub_metering_1, 
+              ylab = "Energy sub metering",
+              xlab = "",
               type = "n"))
 
-with(df, lines(dateTime, Sub_metering_1, type ="l", col="black" ,
+with(df, lines(datetime, Sub_metering_1, type ="l", col="black" ,
                xlab=""))
 
-with(df, lines(dateTime, Sub_metering_2, type ="l", col="red",
+with(df, lines(datetime, Sub_metering_2, type ="l", col="red",
                xlab=""))
 
-with(df, lines(dateTime, Sub_metering_3, type ="l", col="blue",
+with(df, lines(datetime, Sub_metering_3, type ="l", col="blue",
                xlab=""))
 
 legend("topright", lwd=2, bty="n", col = c("black", "red", "blue"), 
@@ -85,7 +87,7 @@ legend("topright", lwd=2, bty="n", col = c("black", "red", "blue"),
 
 
 #plot 4.4
-with(df, plot(dateTime, Global_reactive_power, type ="l"))
+with(df, plot(datetime, Global_reactive_power, type ="l"))
 
 
 dev.off()
